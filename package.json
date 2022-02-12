@@ -23,7 +23,8 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "@rbxts/insitux": "^22.2.10",
-    "@rbxts/services": "^1.2.0"
+    "@rbxts/insitux": "^22.1.21",
+    "@rbxts/services": "^1.2.0",
+    "roblox-ts": "^1.2.9-dev-6901da4"
   }
 }

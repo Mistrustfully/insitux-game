@@ -15,7 +15,17 @@ function attemptConstructInstance(ins: string): Instance | undefined {
 
 function applyProperties(instance: Instance, props: Val) {
 	if (props.t === "dict") {
-		print(props.v);
+		const [suc, err] = pcall(() => {
+			props.v.keys.forEach((val, index) => {
+				if (val.t === "str") {
+					instance[val.v as never] = props.v.vals[index].v as never;
+				} else if (val.t === "key") {
+					instance[val.v.sub(2) as never] = props.v.vals[index].v as never;
+				} else {
+					error("Invalid index type!");
+				}
+			});
+		});
 	}
 }
 
@@ -29,7 +39,7 @@ function constructInstance(args: Val[]): Instance | undefined {
 				if (props) {
 					applyProperties(constructedInstance, props);
 				}
-
+				print(constructedInstance.Name);
 				return constructedInstance;
 			}
 		}
@@ -49,6 +59,6 @@ function exe(name: string, args: Val[]): ValOrErr {
 }
 
 export = {
-	name: "$instance",
+	name: "instance",
 	exe: exe,
 };

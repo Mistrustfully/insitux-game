@@ -22,13 +22,13 @@ function generateCtx(ctxArray: context[]): Ctx {
 		const nullVal: Val = { t: "null", v: undefined };
 		print(name);
 
-		const dotIndex = name.find(".", 1, true);
-		if (dotIndex !== undefined) {
-			const libName = name.sub(1, dotIndex[0]! - 1);
+		const slashIndex = name.find("/", 1, true);
+		if (slashIndex[0] !== undefined) {
+			const libName = name.sub(1, slashIndex[0]! - 1);
 			for (const i of ctxArray) {
 				print(i.name, libName);
 				if (i.name === libName) {
-					const fnName = name.sub(dotIndex[1]! + 1);
+					const fnName = name.sub(slashIndex[1]! + 1);
 					return i.exe(fnName, args);
 				}
 			}
@@ -53,6 +53,7 @@ function generateCtx(ctxArray: context[]): Ctx {
 
 function runInsitux(src: string, context: Ctx) {
 	print("running");
+	print(src, context);
 	invoke(context, src, HttpService.GenerateGUID(), true);
 }
 
